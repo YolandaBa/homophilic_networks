@@ -1,0 +1,49 @@
+# Ignore Python caches and temporary files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.ipynb_checkpoints
+*.ipynb_checkpoints
+
+# Ignore data files
+*.csv
+*.xlsx
+*.json
+*.npy
+*.npz
+*.pkl
+*.h5
+
+# Ignore images and graphs
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.svg
+*.pdf
+*.eps
+*.txt
+*.pkl
+# Ignore output directories and logs
+outputs/
+figures/
+logs/
+plots/
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Environment files
+.env
+.env.local
+venv/
+.envrc
+
+# IDE-specific files
+.vscode/
+.idea/
+
+# Large data directories (if applicable)
+data/

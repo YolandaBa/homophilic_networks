@@ -11,9 +11,10 @@ from collections import defaultdict
 import random
 import bisect
 import copy
+import numpy as np
 
 
-def homophilic_ba_graph(N, m , minority_fraction, homophily):
+def homophilic_ba_graph(N, m , minority_fraction, homophily, seed=None):
     """Return homophilic random graph using BA preferential attachment model.
 
     A graph of n nodes is grown by attaching new nodes each with m
@@ -51,7 +52,9 @@ def homophilic_ba_graph(N, m , minority_fraction, homophily):
     .. [1] A. L. Barabasi and R. Albert "Emergence of scaling in
        random networks", Science 286, pp 509-512, 1999.
     """
-
+    if seed is not None:
+        random.seed(seed)
+        np.random.seed(seed)
     G = nx.Graph()
 
     minority = int(minority_fraction * N)
@@ -62,6 +65,7 @@ def homophilic_ba_graph(N, m , minority_fraction, homophily):
         for node in range(N)])
 
     target_list=list(range(m))
+
     source = m #start with m nodes
 
     while source < N:
@@ -71,7 +75,9 @@ def homophilic_ba_graph(N, m , minority_fraction, homophily):
             G.add_edges_from(zip([source]*m,targets))
 
         target_list.append(source)
+
         source += 1
+
 
     return G
 
@@ -88,6 +94,7 @@ def _pick_targets(G,source,target_list,minority_mask,homophily,m):
     targets = set()
     target_list_copy = copy.copy(target_list)
     count_looking = 0
+
     if prob_sum == 0:
         return targets #it returns an empty set
 
@@ -103,8 +110,9 @@ def _pick_targets(G,source,target_list,minority_mask,homophily,m):
                 targets.add(k)
                 target_list_copy.remove(k)
                 break
+
     return targets
 
 
 if __name__ == '__main__':
-    graph = homophilic_ba_graph(N = 100, m = 2 , minority_fraction = 0.1, homophily= 1)
+    graph = homophilic_ba_graph(N = 10, m = 2 , minority_fraction = 0.2, homophily= 1)
